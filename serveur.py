@@ -7,22 +7,28 @@ import time
 import RPi.GPIO as GPIO
 import socket
 from sys import exit
+from os import system
 
 acces = False
 
+def rejoues():
+        system("python serva.py")
+        exit()
 
 def attente():
         global acces
         global debianeuf
 
         debianeuf = client.recv(2)
+        print(debianeuf)
 
         acces = False
         time.sleep(0.1)
         if len(debianeuf) < 1:
-                socket.close
-                client.close
-                exit()
+                socket.close()
+                client.close()
+                time.sleep(4)
+                threading.Thread(target=rejoues).start()
         acces = True
 
 
@@ -108,9 +114,9 @@ def serv(a, b, c, d, pas):
                 
 
 socket = socket.socket()
-socket.bind(('', 15561))
+socket.bind(('', 17777))
+
 socket.listen(1)
 client, address = socket.accept()
-
-
 rotation()
+
